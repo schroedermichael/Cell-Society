@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class createScene extends Application {
+public class createScene {
     
     public static final int FRAMES_PER_SECOND = 60;
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
@@ -24,7 +24,14 @@ public class createScene extends Application {
         GUIResources = ResourceBundle.getBundle("resources/English");
     }
     
-    @Override
+    protected Scene initScene() {
+        myToolbar = new Toolbar();
+        Scene scene = new Scene(root);
+        myToolbar.initToolbar(SCREEN_SIZE, SCREEN_SIZE, scene, root);
+        return scene;
+    }
+    
+  /*  @Override
     public void start(Stage s) {
         myToolbar = new Toolbar();
         Scene scene = new Scene(root);
@@ -32,11 +39,11 @@ public class createScene extends Application {
 
         s.setScene(scene);
         s.show();
-    }
+    }*/
     
-    public static void main (String[] args) {
+   /* public static void main (String[] args) {
         launch(args);
-    }
+    }*/
 
     
 }
