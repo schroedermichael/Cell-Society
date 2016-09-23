@@ -8,6 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
 public class Toolbar {
     
@@ -38,6 +40,14 @@ public class Toolbar {
     
     
     private void pauseSimulation() {
+        
+    }
+    
+    private Button makeButton(String name, EventHandler<ActionEvent> handleAction) {
+        Button myButton = new Button();
+        myButton.setText(name);
+        myButton.setOnAction(handleAction);
+        return myButton;
         
     }
     
