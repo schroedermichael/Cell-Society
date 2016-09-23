@@ -25,7 +25,7 @@ public class Toolbar {
     
     public void initToolbar(int height, int width, Scene myScene, Group root) {
         myScene.setRoot(root);
-        double toolbarDistance = 15.0;
+        double toolbarDistance = 10.0;
         HBox myToolbar = new HBox(toolbarDistance);
         myToolbar.setPrefWidth(width);
         Slider slider = new Slider(0, 1, 0.5);
@@ -36,7 +36,6 @@ public class Toolbar {
                                                                        "Fire", "Game of Life", "Predator-Prey", "Segregation")
                                                                    );
         loadXMLbutton = makeButton(GUIResources.getString("LoadXML"), event -> getXMLFile());
-        loadXMLbutton = makeButton(GUIResources.getString("LoadXML"), event -> loadFileOptions());
         myToolbar.getChildren().addAll(slider, pause, step, cb, loadXMLbutton);
         root.getChildren().add(myToolbar);
     }
@@ -51,16 +50,7 @@ public class Toolbar {
         return null;
         // TODO Auto-generated method stub
     }
-    
-    private Object stepThroughSimulation () {
-        // TODO Create method to step through simulation
-        return null;
-    }
 
-    private Object loadFileOptions () {
-        // TODO Create file loader
-        return null;
-    }
 
     private void pauseSimulation() {
         //TODO Create method to pause the simulation
