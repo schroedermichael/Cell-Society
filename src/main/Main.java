@@ -1,9 +1,11 @@
 package main;
 
+import applicationView.Toolbar;
 import controller.ApplicationController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -34,6 +36,9 @@ public class Main extends Application {
         s.setTitle(applicationController.getTitle());
 
         Scene scene = applicationController.init(SIZE, SIZE);
+        //TODO: Get toolbar to not interfere with the simulation, want it to be its own section
+        Toolbar myToolbar = new Toolbar();
+        myToolbar.initToolbar(SIZE,SIZE, scene, (Group) scene.getRoot());
         s.setScene(scene);
         s.show();
 
