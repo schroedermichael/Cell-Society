@@ -30,20 +30,4 @@ public class createScene {
         myToolbar.initToolbar(SCREEN_SIZE, SCREEN_SIZE, scene, root);
         return scene;
     }
-    
-  /*  @Override
-    public void start(Stage s) {
-        myToolbar = new Toolbar();
-        Scene scene = new Scene(root);
-        myToolbar.initToolbar(SCREEN_SIZE, SCREEN_SIZE, scene, root);
-
-        s.setScene(scene);
-        s.show();
-    }*/
-    
-   /* public static void main (String[] args) {
-        launch(args);
-    }*/
-
-    
 }
