@@ -36,6 +36,7 @@ public class Toolbar {
                                                                        "Fire", "Game of Life", "Predator-Prey", "Segregation")
                                                                    );
         loadXMLbutton = makeButton(GUIResources.getString("LoadXML"), event -> getXMLFile());
+        loadXMLbutton = makeButton(GUIResources.getString("LoadXML"), event -> loadFileOptions());
         myToolbar.getChildren().addAll(slider, pause, step, cb, loadXMLbutton);
         root.getChildren().add(myToolbar);
     }
@@ -47,12 +48,22 @@ public class Toolbar {
     }
 
     private Object stepSimulation () {
+        return null;
         // TODO Auto-generated method stub
+    }
+    
+    private Object stepThroughSimulation () {
+        // TODO Create method to step through simulation
+        return null;
+    }
+
+    private Object loadFileOptions () {
+        // TODO Create file loader
         return null;
     }
 
     private void pauseSimulation() {
-        
+        //TODO Create method to pause the simulation
     }
     
     private Button makeButton(String name, EventHandler<ActionEvent> handleAction) {
@@ -62,5 +73,6 @@ public class Toolbar {
         return myButton;
         
     }
+    
     
 }
