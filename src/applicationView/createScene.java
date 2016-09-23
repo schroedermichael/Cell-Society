@@ -23,6 +23,7 @@ public class createScene extends Application {
         GUIResources = ResourceBundle.getBundle("resources/English");
     }
     
+<<<<<<< bc358349355cbd382f852ba29dffec22282c4e03
     @Override
     public void start(Stage s) {
         myToolbar = new Toolbar();
@@ -37,3 +38,12 @@ public class createScene extends Application {
     }*/
     
 }
+=======
+    protected Scene initScene() {
+        myToolbar = new Toolbar();
+        Scene scene = new Scene(root);
+        myToolbar.initToolbar(SCREEN_SIZE, SCREEN_SIZE, scene, root);
+        return scene;
+    }
+}
+>>>>>>> Created methods to be implemented when buttons are pressed
