@@ -16,6 +16,7 @@ import java.io.IOException;
  */
 public class XMLParser {
     private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
+
     
     /**
      * Gets the root element in an XML file.

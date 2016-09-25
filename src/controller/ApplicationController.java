@@ -1,6 +1,8 @@
 package controller;
 
 
+import java.io.File;
+import org.w3c.dom.Element;
 import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -15,6 +17,7 @@ public class ApplicationController {
     public static final String TITLE = "Cell Society";
     private static final double SECOND_DELAY = 1000.0;
     Timeline myTimeline;
+    XMLParser myParser = new XMLParser();
     public ApplicationController() {
         
         KeyFrame frame = new KeyFrame(Duration.millis(SECOND_DELAY),
@@ -53,9 +56,10 @@ public class ApplicationController {
         myTimeline.pause();
     }
     
-    public void openFile() {
+    public void openFile(File myFile) {
         try {
-            //XMLParser myParser = new XMLParser(XMLParser);
+            String filePath = myFile.getAbsolutePath();
+            simulationController.initializeSimulation(filePath);
         }
         //TODO: create XML Exception
         catch (XMLParserException xmlexcept){

@@ -67,8 +67,7 @@ public class Main extends Application {
     private void openFile(FileChooser chooseFile) {
         File myFile = chooseFile.showOpenDialog(new Stage());
         if (myFile != null) {
-            //applicationController.openFile(myFile);
-            
+            applicationController.openFile(myFile);
         }
     }
     
