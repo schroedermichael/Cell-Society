@@ -1,8 +1,6 @@
 package applicationView;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.*;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -13,7 +11,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.input.*;
 public class Toolbar {
     
-    private int toolbarSize;
     private final ResourceBundle GUIResources;
     Button pause;
     Button step;
@@ -25,18 +22,17 @@ public class Toolbar {
     
     public void initToolbar(int height, int width, Scene myScene) {
         Group root = (Group)myScene.getRoot();
-        
         myScene.setRoot(root);
-        HBox myToolbar = new HBox(20.0);
+        HBox myToolbar = new HBox(height);
         Slider slider = new Slider(0, 1, 0.5);
         pause = new Button(GUIResources.getString("PauseCommand"));
-        
+        loadXMLbutton = new Button(GUIResources.getString("LoadXML"));
         step = new Button(GUIResources.getString("StepCommand"));
         //TODO: Get ArrayList for ChoiceBox to grab from resource bundle
-        ChoiceBox cb = new ChoiceBox(FXCollections.observableArrayList(
+        ChoiceBox<String> cb = new ChoiceBox<String>(FXCollections.observableArrayList(
                                                                        "Fire", "Game of Life", "Predator-Prey", "Segregation")
                                                                    );
-        loadXMLbutton = new Button(GUIResources.getString("LoadXML"));
+        
         myToolbar.getChildren().addAll(slider, pause, step, cb, loadXMLbutton);
         root.getChildren().add(myToolbar);
     }
@@ -50,12 +46,8 @@ public class Toolbar {
         step.setOnMouseClicked(event);
     }
     
-    private Button makeButton(String name, EventHandler<ActionEvent> handleAction) {
-        Button myButton = new Button();
-        myButton.setText(name);
-        myButton.setOnAction(handleAction);
-        return myButton;
-        
+    public void setXMLFileButton(EventHandler<MouseEvent> event) {
+        loadXMLbutton.setOnMouseClicked(event);
     }
 
     
