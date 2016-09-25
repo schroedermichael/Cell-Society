@@ -7,6 +7,7 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -21,6 +22,7 @@ public class Main extends Application {
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     //private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private static final double SECOND_DELAY = 2.0;
+    private BorderPane root;
 
 
     private ApplicationController applicationController;
@@ -32,13 +34,17 @@ public class Main extends Application {
      */
     @Override
     public void start (Stage s) {
+        root = new BorderPane();
         applicationController = new ApplicationController();
         s.setTitle(applicationController.getTitle());
-
+        //TODO: Figure out how to display both toolbar and simulation
         Scene scene = applicationController.init(SIZE, SIZE);
         //TODO: Get toolbar to not interfere with the simulation, want it to be its own section
         Toolbar myToolbar = new Toolbar();
-        myToolbar.initToolbar(SIZE,SIZE, scene, (Group) scene.getRoot());
+        //myToolbar.initToolbar(SIZE,SIZE, scene, (Group) scene.getRoot());
+        //myToolbar.initToolbar(SIZE,SIZE, scene);
+        root.setTop(myToolbar.initToolbar(SIZE,SIZE+20, scene));
+        scene.setRoot(root);
         s.setScene(scene);
         s.show();
 
