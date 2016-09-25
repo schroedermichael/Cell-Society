@@ -45,6 +45,10 @@ public class ApplicationController {
     public void pause(){
         myTimeline.pause();
     }
+    
+    public void loadFile() {
+        myTimeline.pause();
+    }
     //filler code
     public Scene init(int width, int height) {
         Group root = new Group();

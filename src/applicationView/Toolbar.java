@@ -32,7 +32,6 @@ public class Toolbar {
         ChoiceBox<String> cb = new ChoiceBox<String>(FXCollections.observableArrayList(
                                                                        "Fire", "Game of Life", "Predator-Prey", "Segregation")
                                                                    );
-        
         myToolbar.getChildren().addAll(slider, pause, step, cb, loadXMLbutton);
         root.getChildren().add(myToolbar);
     }

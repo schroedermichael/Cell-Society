@@ -6,8 +6,10 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import java.io.File;
 import applicationView.Toolbar;
 /**
  * Main class for creating an animated scene.
@@ -45,13 +47,29 @@ public class Main extends Application {
                 applicationController.step();
             }
         };
+        EventHandler<MouseEvent> eventThree = new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent m){
+                applicationController.loadFile();
+                //openFile();
+            }
+        };
         myToolbar.initToolbar(20,500,scene);
         myToolbar.setPauseButton(event);
         myToolbar.setStepButton(eventTwo);
+        myToolbar.setXMLFileButton(eventThree);
         s.setScene(scene);
         s.show();
   
     }
+    
+   /* private void openFile(FileChooser chooseFile) {
+        File myFile = chooseFile.showOpenDialog(new Stage());
+        if (myFile != null) {
+            applicationController.openFile(myFile);
+        }
+    }*/
+    
     public static void main (String[] args) {
         launch(args);
     }
