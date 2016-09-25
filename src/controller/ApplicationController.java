@@ -51,7 +51,7 @@ public class ApplicationController {
         myTimeline.pause();
     }
     
-    public void openFile() {
+  /*  public void openFile() {
         try {
             //XMLParser myParser = new XMLParser(XMLParser);
         }
@@ -59,7 +59,7 @@ public class ApplicationController {
         catch (XMLParserException xmlexcept){
             
         }
-    }
+    }*/
     //filler code
     public Scene init(int width, int height) {
         Group root = new Group();

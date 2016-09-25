@@ -27,7 +27,7 @@ public class XMLParser {
             return xmlDocument.getDocumentElement();
         }
         catch (SAXException | IOException e) {
-            throw new XMLParserException(e);
+            //throw new XMLParserException(e);
         }
     }
     // Helper method to do the boilerplate code needed to make a documentBuilder.
@@ -36,7 +36,7 @@ public class XMLParser {
             return DocumentBuilderFactory.newInstance().newDocumentBuilder();
         }
         catch (ParserConfigurationException e) {
-            throw new XMLParserException(e);
+            //throw new XMLParserException(e);
         }
     }
 }
