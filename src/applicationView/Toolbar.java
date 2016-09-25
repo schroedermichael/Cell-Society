@@ -28,11 +28,7 @@ public class Toolbar {
         pause = new Button(GUIResources.getString("PauseCommand"));
         loadXMLbutton = new Button(GUIResources.getString("LoadXML"));
         step = new Button(GUIResources.getString("StepCommand"));
-        //TODO: Get ArrayList for ChoiceBox to grab from resource bundle
-        ChoiceBox<String> cb = new ChoiceBox<String>(FXCollections.observableArrayList(
-                                                                       "Fire", "Game of Life", "Predator-Prey", "Segregation")
-                                                                   );
-        myToolbar.getChildren().addAll(slider, pause, step, cb, loadXMLbutton);
+        myToolbar.getChildren().addAll(slider, pause, step, loadXMLbutton);
         root.getChildren().add(myToolbar);
     }
     

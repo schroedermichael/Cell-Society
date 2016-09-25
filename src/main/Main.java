@@ -55,7 +55,7 @@ public class Main extends Application {
                 openFile(new FileChooser());
             }
         };
-        myToolbar.initToolbar(20,500,scene);
+        myToolbar.initToolbar(30,500,scene);
         myToolbar.setPauseButton(event);
         myToolbar.setStepButton(eventTwo);
         myToolbar.setXMLFileButton(eventThree);
