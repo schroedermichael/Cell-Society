@@ -9,12 +9,14 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import xml.XMLParser;
+import xml.XMLParserException;
 
 public class ApplicationController {
     public static final String TITLE = "Cell Society";
-    private static final double SECOND_DELAY = 100.0;
+    private static final double SECOND_DELAY = 1000.0;
     Timeline myTimeline;
     public ApplicationController() {
+        
         KeyFrame frame = new KeyFrame(Duration.millis(SECOND_DELAY),
                                       e -> getSimulationController().getSimulation().step());
         myTimeline = new Timeline();
@@ -51,7 +53,7 @@ public class ApplicationController {
         myTimeline.pause();
     }
     
-  /*  public void openFile() {
+    public void openFile() {
         try {
             //XMLParser myParser = new XMLParser(XMLParser);
         }
@@ -59,7 +61,8 @@ public class ApplicationController {
         catch (XMLParserException xmlexcept){
             
         }
-    }*/
+    }
+    
     //filler code
     public Scene init(int width, int height) {
         Group root = new Group();
