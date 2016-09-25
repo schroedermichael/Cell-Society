@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import java.util.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 public class createScene extends Application {
     
     public static final int FRAMES_PER_SECOND = 60;
@@ -29,7 +28,6 @@ public class createScene extends Application {
         myToolbar = new Toolbar();
         Scene scene = new Scene(root);
         //myToolbar.initToolbar(SCREEN_SIZE, SCREEN_SIZE, scene, root);
-
         s.setScene(scene);
         s.show();
     }
@@ -37,6 +35,5 @@ public class createScene extends Application {
    /* public static void main (String[] args) {
         launch(args);
     }*/
-
     
 }

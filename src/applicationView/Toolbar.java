@@ -1,5 +1,4 @@
 package applicationView;
-
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -12,7 +11,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.input.*;
-
 public class Toolbar {
     
     private int toolbarSize;
@@ -31,14 +29,14 @@ public class Toolbar {
         myScene.setRoot(root);
         HBox myToolbar = new HBox(20.0);
         Slider slider = new Slider(0, 1, 0.5);
-        pause = makeButton(GUIResources.getString("PauseCommand"));
+        pause = new Button(GUIResources.getString("PauseCommand"));
         
-        step = makeButton(GUIResources.getString("StepCommand"));
+        step = new Button(GUIResources.getString("StepCommand"));
         //TODO: Get ArrayList for ChoiceBox to grab from resource bundle
         ChoiceBox cb = new ChoiceBox(FXCollections.observableArrayList(
                                                                        "Fire", "Game of Life", "Predator-Prey", "Segregation")
                                                                    );
-        loadXMLbutton = makeButton(GUIResources.getString("LoadXML"));
+        loadXMLbutton = new Button(GUIResources.getString("LoadXML"));
         myToolbar.getChildren().addAll(slider, pause, step, cb, loadXMLbutton);
         root.getChildren().add(myToolbar);
     }
@@ -52,11 +50,13 @@ public class Toolbar {
         step.setOnMouseClicked(event);
     }
     
-    private Button makeButton(String name) {
+    private Button makeButton(String name, EventHandler<ActionEvent> handleAction) {
         Button myButton = new Button();
         myButton.setText(name);
+        myButton.setOnAction(handleAction);
         return myButton;
         
     }
+
     
 }
