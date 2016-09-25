@@ -31,14 +31,14 @@ public class Toolbar {
         myScene.setRoot(root);
         HBox myToolbar = new HBox(20.0);
         Slider slider = new Slider(0, 1, 0.5);
-        pause = new Button(GUIResources.getString("PauseCommand"));
+        pause = makeButton(GUIResources.getString("PauseCommand"));
         
-        step = new Button(GUIResources.getString("StepCommand"));
+        step = makeButton(GUIResources.getString("StepCommand"));
         //TODO: Get ArrayList for ChoiceBox to grab from resource bundle
         ChoiceBox cb = new ChoiceBox(FXCollections.observableArrayList(
                                                                        "Fire", "Game of Life", "Predator-Prey", "Segregation")
                                                                    );
-        loadXMLbutton = new Button(GUIResources.getString("LoadXML"));
+        loadXMLbutton = makeButton(GUIResources.getString("LoadXML"));
         myToolbar.getChildren().addAll(slider, pause, step, cb, loadXMLbutton);
         root.getChildren().add(myToolbar);
     }
@@ -50,6 +50,13 @@ public class Toolbar {
     
     public void setStepButton(EventHandler<MouseEvent> event) {
         step.setOnMouseClicked(event);
+    }
+    
+    private Button makeButton(String name) {
+        Button myButton = new Button();
+        myButton.setText(name);
+        return myButton;
+        
     }
     
 }
