@@ -8,7 +8,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
+<<<<<<< aa3401ee54ff90d6076e92e11fc5b19277a7832c
 import javafx.scene.input.*;
+=======
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+
+>>>>>>> Added main class to run the entire program, coordinated the two applicationView classes to work with main, created make button method in toolbar to allow easy addition of button
 public class Toolbar {
     
     private final ResourceBundle GUIResources;
@@ -70,9 +76,19 @@ public class Toolbar {
 >>>>>>> Created methods to be implemented when buttons are pressed
     }
     
+<<<<<<< aa3401ee54ff90d6076e92e11fc5b19277a7832c
     public void setXMLFileButton(EventHandler<MouseEvent> event) {
         loadXMLbutton.setOnMouseClicked(event);
     }
 
+=======
+    private Button makeButton(String name, EventHandler<ActionEvent> handleAction) {
+        Button myButton = new Button();
+        myButton.setText(name);
+        myButton.setOnAction(handleAction);
+        return myButton;
+        
+    }
+>>>>>>> Added main class to run the entire program, coordinated the two applicationView classes to work with main, created make button method in toolbar to allow easy addition of button
     
 }
