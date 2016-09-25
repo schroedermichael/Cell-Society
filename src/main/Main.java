@@ -51,7 +51,7 @@ public class Main extends Application {
             @Override
             public void handle(MouseEvent m){
                 applicationController.loadFile();
-                //openFile();
+                openFile(new FileChooser());
             }
         };
         myToolbar.initToolbar(20,500,scene);
@@ -63,12 +63,13 @@ public class Main extends Application {
   
     }
     
-   /* private void openFile(FileChooser chooseFile) {
+    private void openFile(FileChooser chooseFile) {
         File myFile = chooseFile.showOpenDialog(new Stage());
         if (myFile != null) {
-            applicationController.openFile(myFile);
+            //applicationController.openFile(myFile);
+            
         }
-    }*/
+    }
     
     public static void main (String[] args) {
         launch(args);

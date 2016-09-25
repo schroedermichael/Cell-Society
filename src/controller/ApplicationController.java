@@ -8,6 +8,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import xml.XMLParser;
 
 public class ApplicationController {
     public static final String TITLE = "Cell Society";
@@ -48,6 +49,16 @@ public class ApplicationController {
     
     public void loadFile() {
         myTimeline.pause();
+    }
+    
+    public void openFile() {
+        try {
+            //XMLParser myParser = new XMLParser(XMLParser);
+        }
+        //TODO: create XML Exception
+        catch (XMLParserException xmlexcept){
+            
+        }
     }
     //filler code
     public Scene init(int width, int height) {
