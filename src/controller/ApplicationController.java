@@ -47,8 +47,7 @@ public class ApplicationController {
     public String getTitle () {
         return TITLE;
     }
-    
-    
+
     public Scene init (int width, int height) {
         root = new Group();
         myScene = new Scene(root, width, height, Color.BLACK);
@@ -62,12 +61,11 @@ public class ApplicationController {
         handleEvents(width, root);
         return myScene;
     }
-    
 
     private void update () {
         setSpeed();
         getSimulationController().updateSimulations();
-        
+
     }
 
     public void play () {
@@ -103,12 +101,12 @@ public class ApplicationController {
             openFile(myFile);
         }
     }
-    
+
     public File getMyFile () {
         return myFile;
     }
 
-    public void openFile (File myFile) throws XMLException{
+    public void openFile (File myFile) throws XMLException {
         try {
             String filePath = myFile.getAbsolutePath();
             myToolbar.removeToolbar(root);
@@ -149,5 +147,5 @@ public class ApplicationController {
     public SimulationController getSimulationController () {
         return simulationController;
     }
-    
+
 }

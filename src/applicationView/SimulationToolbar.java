@@ -1,4 +1,5 @@
 package applicationView;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,31 +20,32 @@ public class SimulationToolbar {
     private final ResourceBundle GUIResources;
     ApplicationController myAppController = new ApplicationController();
     Group root;
-    private Series<Number, Number> firstSeries= new XYChart.Series<Number, Number>();
-    private Series<Number, Number> secondSeries= new XYChart.Series<Number, Number>();
-    private Series<Number, Number> thirdSeries= new XYChart.Series<Number, Number>();
+    private Series<Number, Number> firstSeries = new XYChart.Series<Number, Number>();
+    private Series<Number, Number> secondSeries = new XYChart.Series<Number, Number>();
+    private Series<Number, Number> thirdSeries = new XYChart.Series<Number, Number>();
     private ArrayList<Integer> myGraphValues;
-    
-    public SimulationToolbar() {
+
+    public SimulationToolbar () {
         GUIResources = ResourceBundle.getBundle("resources/English");
     }
-    
-    public void initSimToolbar(int height, int width, Scene myScene) {
-        root = (Group)myScene.getRoot();
+
+    public void initSimToolbar (int height, int width, Scene myScene) {
+        root = (Group) myScene.getRoot();
         VBox mySimToolbar = new VBox();
         mySimToolbar.getChildren().add(createGraph(myScene));
         root.getChildren().add(mySimToolbar);
 
     }
-    
-    private LineChart<Number,Number> myLineChart = new LineChart<Number,Number>(new NumberAxis(),new NumberAxis());
-    
-    private LineChart<Number, Number> createGraph(Scene myScene) {
-   
+
+    private LineChart<Number, Number> myLineChart =
+            new LineChart<Number, Number>(new NumberAxis(), new NumberAxis());
+
+    private LineChart<Number, Number> createGraph (Scene myScene) {
+
         final NumberAxis x_axis = new NumberAxis();
         final NumberAxis y_axis = new NumberAxis();
         x_axis.setLabel(GUIResources.getString("XAxis"));
-        //myLineChart.setTitle(GUIResources.getString("ChartTitle"));
+        // myLineChart.setTitle(GUIResources.getString("ChartTitle"));
         myLineChart.setPrefWidth(500);
         myLineChart.setPrefHeight(40);
         myLineChart.setTranslateY(370);
@@ -52,20 +54,19 @@ public class SimulationToolbar {
         myLineChart.getData().add(thirdSeries);
         myLineChart.setLegendSide(Side.RIGHT);
         myLineChart.setLegendVisible(true);
-        //firstSeries.setName("Burning");
-        //secondSeries.setName("Empty");
+        // firstSeries.setName("Burning");
+        // secondSeries.setName("Empty");
         return myLineChart;
     }
-    
-    public Series<Number, Number> updateGraph (List<Integer> myOutput) {
+
+    public void updateGraph (List<Integer> myOutput) {
         firstSeries.getData().add(new Data<Number, Number>(myOutput.get(0), myOutput.get(1)));
-        if(myOutput.size() > 2) {
+        if (myOutput.size() > 2) {
             secondSeries.getData().add(new Data<Number, Number>(myOutput.get(0), myOutput.get(2)));
         }
-        if(myOutput.size() >3) {
+        if (myOutput.size() > 3) {
             thirdSeries.getData().add(new Data<Number, Number>(myOutput.get(0), myOutput.get(3)));
         }
-        return firstSeries;
     }
-    
+
 }

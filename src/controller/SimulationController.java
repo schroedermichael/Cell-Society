@@ -19,7 +19,7 @@ public class SimulationController {
     SimulationController (Group simulationRoot, int height, int width) {
         this.mySimulations = new ArrayList<Simulation>();
         this.simulationRoot = simulationRoot;
-        simulationRoot.relocate(height/4, width/4);
+        simulationRoot.relocate(height / 4, width / 4);
         File simulationConfig = new File("src/resources/Fire.xml");
         initializeSimulation(simulationConfig.getAbsolutePath());
     }
@@ -39,26 +39,19 @@ public class SimulationController {
         simulationRoot.getChildren().add(mySimulations.get(0).getSimulationView());
         mySimulations.get(mySimulations.size() - 1).countCellsinGrid();
     }
-    
-  /*  public void graphCalculations() {
-        
-        List<Integer> myOutput = new ArrayList<Integer>();
-        myOutput = getSimulation().countCellsinGrid();
-        mySimToolbar.updateGraph(myOutput);
-    }*/
 
     public Simulation getSimulation () {
         return mySimulations.get(0);
     }
 
     private SimulationToolbar mySimToolbar;
-    
+
     public void setMySimToolbar (SimulationToolbar mySimToolbar) {
         this.mySimToolbar = mySimToolbar;
     }
 
     public void updateSimulations () {
-        
+
         for (Simulation s : mySimulations) {
             mySimToolbar.updateGraph(s.countCellsinGrid());
             s.step();
