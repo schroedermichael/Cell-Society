@@ -22,6 +22,8 @@ public class SimulationToolbar {
     Group root;
     List<Slider> mySliders;
     private Series<Number, Number> firstSeries = new XYChart.Series<Number, Number>();
+    private Series<Number, Number> secondSeries= new XYChart.Series<Number, Number>();
+    private Series<Number, Number> thirdSeries= new XYChart.Series<Number, Number>();
     private ArrayList<Integer> myGraphValues;
     VBox myToolbar;
     public SimulationToolbar () {
@@ -42,10 +44,15 @@ public class SimulationToolbar {
         myLineChart.setTranslateY(370);
         return myLineChart;
     }
+    
     public Series<Number, Number> updateGraph (List<Integer> myOutput) {
         firstSeries.getData().add(new Data<Number, Number>(myOutput.get(0), myOutput.get(1)));
-        System.out.println("Hi " + firstSeries.getData());
-        myLineChart.getData().add(firstSeries);
+        if(myOutput.size() > 2) {
+            secondSeries.getData().add(new Data<Number, Number>(myOutput.get(0), myOutput.get(2)));
+        }
+        if(myOutput.size() >3) {
+            thirdSeries.getData().add(new Data<Number, Number>(myOutput.get(0), myOutput.get(3)));
+        }
         return firstSeries;
     }
 
