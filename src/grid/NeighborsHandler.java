@@ -1,14 +1,19 @@
 package grid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
 import cell.Cell;
 import grid.Neighbor;
 // abstract class or interface
 public abstract class NeighborsHandler {
-    private String myCellShape;
+    //private String myCellShape;
+    private String myNeighborsToConsider;
     private Grid myGrid;
-    NeighborsHandler (String cellShape, Grid grid) {
-        myCellShape = cellShape.toUpperCase();
+
+
+    NeighborsHandler (String neighborsToConsider, Grid grid) {
+        myNeighborsToConsider = neighborsToConsider;
+        //myCellShape = cellShape.toUpperCase();
         myGrid = grid;
     }
     /*
@@ -34,28 +39,44 @@ public abstract class NeighborsHandler {
      * this.allowableNeighbors = allowableNeighbors;
      * }
      */
+
+
+    public List<Cell> getVisionNeighbors (Coordinate coordinate, int visionDistance) {
+        List<Cell> visionNeighbors = new ArrayList<Cell>();
+        PriorityQueue<Cell> visionQueue = new PriorityQueue<Cell>(getSurroundingNeighbors(coordinate));
+        for(int i = 0; i < visionDistance; i++) {
+            int bound = visionQueue.size();
+            int index = 0;
+            while(index < bound) {
+                Cell cell = visionQueue.poll();
+                visionNeighbors.add(cell);
+                Coordinate nextVisionCoordinate = cell.getMyGridCoordinate().add(coordinate.scale(i));
+                if(getMyGrid().isCreated(nextVisionCoordinate)) {
+                    visionQueue.add(getMyGrid().getCell(nextVisionCoordinate));
+                }
+                index++;
+            }
+        }
+        return visionNeighbors;
+    }
+
     public List<Cell> getDirectionNeighbors (Coordinate coordinate,
                                              Coordinate directionCoordinate) {
         Coordinate neighborDirectionCoordinate = coordinate.add(directionCoordinate);
         List<Cell> directionNeighbors =
                 getAdjacentNeighbors(coordinate, neighborDirectionCoordinate);
 
-        if (!myCellShape.equals("HEXAGON") &&
-            Neighbor.ORTHOGONAL.getNeighbors().contains(directionCoordinate)) {
-            directionNeighbors.removeAll(getOrthogonalNeighbors(coordinate));
-            if (getMyGrid().isCreated(neighborDirectionCoordinate)) {
-                directionNeighbors.add(myGrid.getCell(neighborDirectionCoordinate));
-            }
-        }
-
+        directionNeighbors.retainAll(getOrthogonalNeighbors(neighborDirectionCoordinate));
         return directionNeighbors;
     }
     public List<Cell> getSurroundingNeighbors (Coordinate coordinate) {
-        return getNeighbors(Neighbor.valueOf(myCellShape + "SURROUNDING").getNeighbors(),
+        return getNeighbors(Neighbor.valueOf(myNeighborsToConsider).getNeighbors(),
                             coordinate);
     }
     public List<Cell> getOrthogonalNeighbors (Coordinate coordinate) {
-        return getNeighbors(Neighbor.valueOf("ORTHOGONAL").getNeighbors(), coordinate);
+
+        return getNeighbors(Neighbor.valueOf(myNeighborsToConsider + "ORTHOGONAL").getNeighbors(), coordinate);
+
     }
     public List<Cell> getAdjacentNeighbors (Coordinate coordinate,
                                             Coordinate directionNeighborCoordinate) {

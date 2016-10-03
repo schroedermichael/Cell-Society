@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Title Name="Normal GameOfLife">
+<Title Name="Specific Fire">
 	<author>Sean</author>
-	<Simulation SimulationType="GameOfLife">
+	<Simulation SimulationType="Fire">
 		<GeneralConfig>
 			<gridWidth>500</gridWidth>
 			<gridHeight>500</gridHeight>
 			<numberOfRows>10</numberOfRows>
 			<numberOfColumns>10</numberOfColumns>
-			<defaultState>Empty</defaultState>
+			<defaultState>Tree</defaultState>
 			<cellShape>Rectangle</cellShape>
 			<neighborsToConsider>Square</neighborsToConsider>
-			<edgeType>Normal</edgeType>
-			<generationType>Random</generationType>
+			<edgeType>Toroidal</edgeType>
+			<generationType>Specific</generationType>
 		</GeneralConfig>
 		<SimulationConfig>
+			<burnTime>2</burnTime>
+    		<probCatch>50</probCatch>
 		</SimulationConfig>
-		<Cells InitialSetup="Specific">
-			<cell_5_5>Living</cell_5_5>
-			<cell_3_4>Living</cell_3_4>
+		<Cells>
+			<cell_5_5>Burning</cell_5_5>
+			<cell_0_0>Burning</cell_0_0>
 			<cell_5_3>Empty</cell_5_3>
 		</Cells>
 	</Simulation>

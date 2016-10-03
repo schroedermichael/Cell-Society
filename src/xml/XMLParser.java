@@ -10,6 +10,7 @@ import simulation.GameOfLifeSimulation;
 import simulation.PredatorPreySimulation;
 import simulation.SegregationSimulation;
 import simulation.Simulation;
+import simulation.SugarSimulation;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -37,10 +38,13 @@ public class XMLParser {
         else if (simulationType.equals("PredatorPrey")) {
             simulation = new PredatorPreySimulation(generateSimulationConfig(rootElement));
         }
-        else if(simulationType.equals("Segregation")){
+        else if (simulationType.equals("Segregation")) {
             simulation = new SegregationSimulation(generateSimulationConfig(rootElement));
         }
-        else{
+        else if (simulationType.equals("Sugar")) {
+            simulation = new SugarSimulation(generateSimulationConfig(rootElement));
+        }
+        else {
             simulation = new ForagingAntsSimulation(generateSimulationConfig(rootElement));
         }
         return simulation;
@@ -68,17 +72,17 @@ public class XMLParser {
     }
 
     private Map<String, String> generateSectionConfig (Element rootElement, String section) {
-        Map<String, String> initCells = new HashMap<String, String>();
-        NodeList cells = getChildNodesOfTag(section, rootElement);
-        for (int i = 0; i < cells.getLength(); i++) {
-            if (cells.item(i).getFirstChild() != null) {
-                String keyTag = cells.item(i).getNodeName();
-                String valSimData = cells.item(i).getFirstChild().getNodeValue();
-                initCells.put(keyTag, valSimData);
+        Map<String, String> sectionMap = new HashMap<String, String>();
+        NodeList items = getChildNodesOfTag(section, rootElement);
+        for (int i = 0; i < items.getLength(); i++) {
+            if (items.item(i).getFirstChild() != null) {
+                String keyTag = items.item(i).getNodeName();
+                String valSimData = items.item(i).getFirstChild().getNodeValue();
+                sectionMap.put(keyTag, valSimData);
             }
         }
         // printMap(initCells);
-        return initCells;
+        return sectionMap;
     }
 
     private String getSimulationType (Element rootElement) {
@@ -89,7 +93,7 @@ public class XMLParser {
     public NodeList getChildNodesOfTag (String tagName, Element rootElement) {
         return rootElement.getElementsByTagName(tagName).item(0).getChildNodes();
     }
-    
+
     /*
      * public String getTagValue (String tagName, Element rootElement) {
      * return rootElement.getAttribute(tagName);
