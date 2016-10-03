@@ -21,7 +21,7 @@ public class Main extends Application {
      * 
      * @return nothing
      */
-    @Override///Almost all of this should go in ApplicationController
+    @Override
     public void start (Stage s) {
         applicationController = new ApplicationController();
         s.setTitle(applicationController.getTitle());

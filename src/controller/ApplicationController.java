@@ -2,19 +2,17 @@ package controller;
 
 import javafx.animation.Animation.Status;
 import javafx.event.EventHandler;
-import java.util.List;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import Exceptions.XMLException;
 import applicationView.SimulationToolbar;
 import applicationView.Toolbar;
+import applicationView.applicationView;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -26,12 +24,11 @@ public class ApplicationController {
     private Toolbar myToolbar;
     private Timeline myTimeline;
     private final ResourceBundle GUIResources;
-    private Scene myScene;
     private Group root;
-    private Group root2 = new Group();
     private SimulationController simulationController;
     private File myFile;
     private SimulationToolbar mySimToolbar;
+    private applicationView myView;
 
     public ApplicationController () {
         GUIResources = ResourceBundle.getBundle("resources/English");
@@ -48,7 +45,7 @@ public class ApplicationController {
         return TITLE;
     }
 
-    public Scene init (int width, int height) {
+   /* public Scene init (int width, int height) {
         root = new Group();
         myScene = new Scene(root, width, height, Color.BLACK);
         simulationController = new SimulationController(root2, height, width);
@@ -57,8 +54,14 @@ public class ApplicationController {
         mySimToolbar = new SimulationToolbar();
         //mySimToolbar.initSimToolbar(height, 50, myScene);
         simulationController.setMySimToolbar(mySimToolbar);
-        myToolbar.initToolbar(30, width, myScene);
+        //myToolbar.initToolbar(30, width, myScene);
         handleEvents(width, root);
+        return myScene;
+    }*/
+    
+    public Scene init(int width, int height) {
+        myView = new applicationView();
+        Scene myScene = myView.initBorderPane(width, height);
         return myScene;
     }
 
@@ -111,7 +114,7 @@ public class ApplicationController {
             String filePath = myFile.getAbsolutePath();
             myToolbar.removeToolbar(root);
             simulationController.initializeSimulation(filePath);
-            myToolbar.initToolbar(30, 500, myScene);
+            //myToolbar.initToolbar(30, 500, myScene);
             handleEvents(500, root);
         }
         catch (XMLException xmlexcept) {

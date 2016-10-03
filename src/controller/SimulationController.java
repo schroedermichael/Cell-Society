@@ -44,7 +44,7 @@ public class SimulationController {
     public void updateSimulations () {
         
         for (Simulation s : mySimulations) {
-            mySimToolbar.updateGraph(s.countCellsinGrid());
+            //mySimToolbar.updateGraph(s.countCellsinGrid());
             s.step();
         }
     }

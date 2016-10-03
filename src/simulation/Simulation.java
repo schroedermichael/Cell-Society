@@ -46,8 +46,8 @@ public abstract class Simulation {
 
         initializeSimulation(simulationConfig);
 
-        myView.setCenter(myGridView.getRoot());
-        myView.setRight(mySimulationToolbar.getRoot());
+        //myView.setCenter(myGridView.getRoot());
+        //myView.setRight(mySimulationToolbar.getRoot());
 
     }
 

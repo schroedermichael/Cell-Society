@@ -33,9 +33,8 @@ public class Toolbar {
 
     private HBox myToolbar;
 
-    public void initToolbar (int height, int width, Scene myScene) {
-        Group root = (Group) myScene.getRoot();
-        myScene.setRoot(root);
+    public Group initToolbar (int height, int width) {
+        Group root = new Group();
         myToolbar = new HBox(height);
         slider = new Slider(0.5, 2, 1);
         pause = new Button(GUIResources.getString("PlayCommand"));
@@ -43,6 +42,7 @@ public class Toolbar {
         loadXMLbutton = new Button(GUIResources.getString("LoadXML"));
         myToolbar.getChildren().addAll(slider, pause, step, loadXMLbutton);
         root.getChildren().add(myToolbar);
+        return root;
     }
 
     public void removeToolbar (Group root) {
