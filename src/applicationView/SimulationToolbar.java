@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import controller.ApplicationController;
+import javafx.geometry.Side;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -49,7 +50,10 @@ public class SimulationToolbar {
         myLineChart.getData().add(firstSeries);
         myLineChart.getData().add(secondSeries);
         myLineChart.getData().add(thirdSeries);
+        myLineChart.setLegendSide(Side.RIGHT);
         myLineChart.setLegendVisible(true);
+        //firstSeries.setName("Burning");
+        //secondSeries.setName("Empty");
         return myLineChart;
     }
     
@@ -61,7 +65,6 @@ public class SimulationToolbar {
         if(myOutput.size() >3) {
             thirdSeries.getData().add(new Data<Number, Number>(myOutput.get(0), myOutput.get(3)));
         }
-        System.out.println("Data " + firstSeries.getData());
         return firstSeries;
     }
     
