@@ -19,6 +19,8 @@ public class SimulationToolbar {
     ApplicationController myAppController = new ApplicationController();
     Group root;
     private Series<Number, Number> firstSeries= new XYChart.Series<Number, Number>();
+    private Series<Number, Number> secondSeries= new XYChart.Series<Number, Number>();
+    private Series<Number, Number> thirdSeries= new XYChart.Series<Number, Number>();
     private ArrayList<Integer> myGraphValues;
     
     public SimulationToolbar() {
@@ -29,7 +31,6 @@ public class SimulationToolbar {
         root = (Group)myScene.getRoot();
         VBox mySimToolbar = new VBox();
         mySimToolbar.getChildren().add(createGraph(myScene));
-        checkRunningSim();
         root.getChildren().add(mySimToolbar);
 
     }
@@ -45,25 +46,23 @@ public class SimulationToolbar {
         myLineChart.setPrefWidth(500);
         myLineChart.setPrefHeight(40);
         myLineChart.setTranslateY(370);
+        myLineChart.getData().add(firstSeries);
+        myLineChart.getData().add(secondSeries);
+        myLineChart.getData().add(thirdSeries);
+        myLineChart.setLegendVisible(true);
         return myLineChart;
     }
     
     public Series<Number, Number> updateGraph (List<Integer> myOutput) {
         firstSeries.getData().add(new Data<Number, Number>(myOutput.get(0), myOutput.get(1)));
-        System.out.println("Hi " + firstSeries.getData());
-        myLineChart.getData().add(firstSeries);
+        if(myOutput.size() > 2) {
+            secondSeries.getData().add(new Data<Number, Number>(myOutput.get(0), myOutput.get(2)));
+        }
+        if(myOutput.size() >3) {
+            thirdSeries.getData().add(new Data<Number, Number>(myOutput.get(0), myOutput.get(3)));
+        }
+        System.out.println("Data " + firstSeries.getData());
         return firstSeries;
-    }
-    
-    private void checkRunningSim() {
-        //TODO: Fix this entire method
-        File myFile = myAppController.getMyFile();
-        if (myFile != null) {
-        System.out.println(myFile.getPath());
-        if (myFile.getPath().contains("Fire")) {
-            //System.out.println("Cats");
-        }
-        }
     }
     
 }
