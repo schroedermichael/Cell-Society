@@ -33,24 +33,18 @@ public class SimulationController {
         mySimulations.get(mySimulations.size() - 1).countCellsinGrid();
     }
     
-  /*  public void graphCalculations() {
-        
-        List<Integer> myOutput = new ArrayList<Integer>();
-        myOutput = getSimulation().countCellsinGrid();
-        mySimToolbar.updateGraph(myOutput);
-    }*/
     public Simulation getSimulation () {
         return mySimulations.get(0);
     }
     
     
-    //public void setMySimToolbar (SimulationToolbar mySimToolbar) {
-    //    this.mySimToolbar = mySimToolbar;
-    //}
+    public void setMySimToolbar (SimulationToolbar mySimToolbar) {
+        this.mySimToolbar = mySimToolbar;
+    }
     public void updateSimulations () {
         
         for (Simulation s : mySimulations) {
-            //mySimToolbar.updateGraph(s.countCellsinGrid());
+            mySimToolbar.updateGraph(s.countCellsinGrid());
             s.step();
         }
     }
