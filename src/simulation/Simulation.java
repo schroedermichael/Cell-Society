@@ -60,7 +60,7 @@ public abstract class Simulation {
         return stepNum;
     }
 
-    public abstract List<Integer> countCellsinGrid ();
+    public abstract Map<String,Integer> countCellsinGrid ();
 
     public Grid getGrid () {
         return myGrid;
@@ -283,5 +283,5 @@ public abstract class Simulation {
         return mySimulationToolbar.getRoot();
     }
 
-    public abstract void getSimulationNames ();
+    public abstract List<String> getSimulationNames ();
 }

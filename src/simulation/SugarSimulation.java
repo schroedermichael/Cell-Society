@@ -2,6 +2,7 @@ package simulation;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,7 @@ public class SugarSimulation extends Simulation {
     private int myInitialAgents;
     private int myMaxPatchSugar;
     private int myNumAgents;
+    private ResourceBundle GUIResources = ResourceBundle.getBundle("resources/English");
 
     public SugarSimulation (Map<String, Map<String, String>> simulationConfig) {
         super(simulationConfig);
@@ -40,20 +42,27 @@ public class SugarSimulation extends Simulation {
     }
 
     @Override
-    public List<Integer> countCellsinGrid () {
-        List<Integer> cellCounts = new ArrayList<Integer>();
-        cellCounts.add(myTicker);
-        cellCounts.add(myNumAgents);
-
+    public Map<String,Integer> countCellsinGrid () {
+        Map<String,Integer> cellCounts = new HashMap<String,Integer>();
+        List<String> myNames = getSimulationNames();
+        cellCounts.put("Step", myTicker);
+        for (String name: myNames) {
+            if(cellCounts.containsKey(name)) {
+                if(name.equals(GUIResources.getString("NumAgents")))
+                    cellCounts.put(name, myNumAgents);
+            }
+            else {
+               cellCounts.put(name, 0);
+            }
+        }
         return cellCounts;
     }
 
     @Override
-    public void getSimulationNames () {
-        ResourceBundle GUIResources = ResourceBundle.getBundle("resources/English");
+    public List<String> getSimulationNames () {
         List<String> myList = new ArrayList<String>();
         myList.add(GUIResources.getString("NumAgents"));
-        mySimulationGraph.addToLegend(myList);
+        return myList;
     }
 
     @Override

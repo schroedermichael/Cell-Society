@@ -51,12 +51,12 @@ public class SegregationSimulation extends Simulation {
     }
 
     @Override
-    public void getSimulationNames () {
+    public List<String> getSimulationNames () {
         List<String> myList = new ArrayList<String>();
         for (State n : getSimulationStates()) {
             myList.add(n.name());
         }
-        mySimulationGraph.addToLegend(myList);
+        return myList;
     }
 
     private void updateAgents () {
@@ -154,14 +154,26 @@ public class SegregationSimulation extends Simulation {
     }
 
     @Override
-    public List<Integer> countCellsinGrid () {
+    public Map<String,Integer> countCellsinGrid () {
         stepNum = getStepNum();
+        List<String> myNames = getSimulationNames();
+        Map<String,Integer> myOutput = new HashMap<String,Integer>();
+        myOutput.put("Step",stepNum);
+        for (String name: myNames) {
+            if(myOutput.containsKey(name)) {
+                if(name.equals("EMPTY")) {
+                    myOutput.put(name, getGrid().getNumColumns() * getGrid().getNumRows() - myXCount - myOCount);
+                }
+                if(name.equals("X")) 
+                    myOutput.put(name, myXCount);
+                if(name.equals("O"))
+                    myOutput.put(name, myOCount);
+            }
+            else {
+                myOutput.put(name, 0);
+            }
+        }
         stepNum++;
-        List<Integer> myOutput = new ArrayList<Integer>();
-        myOutput.add(stepNum - 1);
-        myOutput.add(myXCount);
-        myOutput.add(myOCount);
-        myOutput.add(getGrid().getNumColumns() * getGrid().getNumRows() - myXCount - myOCount);
         return myOutput;
     }
 

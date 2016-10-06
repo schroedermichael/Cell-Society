@@ -1,6 +1,8 @@
 package applicationView;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import javafx.geometry.Side;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -46,15 +48,21 @@ public class SimulationGraph {
      * 
      * @param myNamesForLegend
      */
-    public void addToLegend (List<String> myNamesForLegend) {
-        myFirstSeries.setName(myNamesForLegend.get(0));
-        if (myNamesForLegend.size() > 1) {
-            mySecondSeries.setName(myNamesForLegend.get(1));
-            myLineChart.getData().add(mySecondSeries);
-        }
-        if (myNamesForLegend.size() > 2) {
-            myThirdSeries.setName(myNamesForLegend.get(2));
-            myLineChart.getData().add(myThirdSeries);
+    public void addToLegend (Set<String> myNamesForLegend) {
+        for (int i = 0; i < myNamesForLegend.size(); i++) {
+            String checkName = myNamesForLegend.iterator().next();
+            if (checkName.equals("Step")) {
+            }
+            else if (myFirstSeries == null) 
+                myFirstSeries.setName(checkName);
+            else if (mySecondSeries == null) {
+                mySecondSeries.setName(checkName);
+                myLineChart.getData().add(mySecondSeries);
+            }
+            else if (myThirdSeries == null) {
+                myThirdSeries.setName(checkName);
+                myLineChart.getData().add(myThirdSeries);
+            }
         }
     }
 
@@ -65,7 +73,9 @@ public class SimulationGraph {
      * 
      * @param myData
      */
-    public void updateGraph (List<Integer> myData) {
+    public void updateGraph (Map<String,Integer> myData) {
+        Set<String> myLegendNames = myData.keySet();
+        addToLegend(myLegendNames);
         myFirstSeries.getData().add(new Data<Number, Number>(myData.get(0), myData.get(1)));
         if (myData.size() > 2) {
             mySecondSeries.getData()
