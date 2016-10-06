@@ -61,11 +61,11 @@ public class ApplicationController {
     }
 
     private void resetApplicationView () {
-        myApplicationView.setCenter(mySimulationController.getSimulation().getGridView().getRoot());
-        myApplicationView.setRight(mySimulationController.getSimulation().getSimulationToolbar());
+        myApplicationView.setCenter(mySimulationController.getSimulation().getView());
+        // myApplicationView.setRight(mySimulationController.getSimulation().getSimulationToolbar());
         myApplicationView.setTop(myToolbar.getToolbar());
-        myApplicationView
-                .setBottom(mySimulationController.getSimulation().getGraphView().createGraph());
+        // myApplicationView
+        // .setBottom(mySimulationController.getSimulation().getGraphView().createGraph());
 
     }
 

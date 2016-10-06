@@ -8,46 +8,31 @@ import cell.Cell;
 import cell.State;
 import grid.Coordinate;
 import grid.Grid;
-import grid.GridView;
-import grid.HexagonGridView;
 import grid.NeighborsHandler;
 import grid.NormalEdgeNeighborsHandler;
-import grid.RectangleGridView;
 import grid.ToroidalEdgeNeighborsHandler;
-import grid.TriangleGridView;
-import javafx.geometry.Dimension2D;
-import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.layout.BorderPane;
-import applicationView.SimulationGraph;
 import applicationView.SimulationToolbar;
+import applicationView.SimulationView;
 
 
 public abstract class Simulation {
+    private static final String GENERAL_CONFIG = "GeneralConfig";
     private String myCellShape = "Square";
-    private BorderPane myView;
-    private Group myRoot;
-    private SimulationToolbar mySimulationToolbar;
     private Grid myGrid;
-    private GridView myGridView;
     private NeighborsHandler myNeighborsHandler;
     private State myDefaultState;
     private String myNeighborsToConsider;
     private String myEdgeType;
-    private Dimension2D myGridSize;
-    
+
+    private SimulationView mySimulationView;
+
     protected int stepNum;
-    protected SimulationGraph mySimulationGraph;
 
     public Simulation (Map<String, Map<String, String>> simulationConfig) {
-        initializeView();
+
         initializeSimulation(simulationConfig);
         getSimulationNames();
-    }
-
-    private void initializeView () {
-        mySimulationGraph = new SimulationGraph();
-        mySimulationToolbar = new SimulationToolbar();
     }
 
     public int getStepNum () {
@@ -68,32 +53,33 @@ public abstract class Simulation {
         return myCellShape;
     }
 
-    public void setCellShape (String cellShape) {
-        handleCellShape(cellShape);
-        this.myCellShape = cellShape;
-    }
-
     public abstract void step ();
 
     public void initializeSimulation (Map<String, Map<String, String>> simulationConfig) {
         initializeSimulationDetails(simulationConfig.get("SimulationConfig"));
         initializeGrid(simulationConfig);
-        initializeSimulationToolbar(mySimulationToolbar);
 
-        initializeGeneralDetails(simulationConfig.get("GeneralConfig"));
+        initializeGeneralDetails(simulationConfig.get(GENERAL_CONFIG));
+        initializeView(simulationConfig);
+
+    }
+
+    private void initializeView (Map<String, Map<String, String>> simulationConfig) {
+        mySimulationView = new SimulationView(simulationConfig, myGrid);
+        initializeSimulationToolbar(mySimulationView.getToolbar());
     }
 
     public void initializeGrid (Map<String, Map<String, String>> simulationConfig) {
         Map<Coordinate, Cell> cellGrid = new HashMap<Coordinate, Cell>();
         setGrid(new Grid(Integer
-                .parseInt(simulationConfig.get("GeneralConfig").get("numberOfRows")), Integer
-                        .parseInt(simulationConfig.get("GeneralConfig").get("numberOfRows")),
+                .parseInt(simulationConfig.get(GENERAL_CONFIG).get("numberOfRows")), Integer
+                        .parseInt(simulationConfig.get(GENERAL_CONFIG).get("numberOfRows")),
                          cellGrid));
-        setDefaultState(getSimulationState(simulationConfig.get("GeneralConfig")
+        setDefaultState(getSimulationState(simulationConfig.get(GENERAL_CONFIG)
                 .get("defaultState")));
-        myEdgeType = simulationConfig.get("GeneralConfig").get("edgeType");
+        myEdgeType = simulationConfig.get(GENERAL_CONFIG).get("edgeType");
         populateGridWithSpecificValues(simulationConfig.get("Cells"));
-        handleMapGeneration(simulationConfig.get("GeneralConfig"));
+        handleMapGeneration(simulationConfig.get(GENERAL_CONFIG));
         generateMap();
     }
 
@@ -109,9 +95,6 @@ public abstract class Simulation {
     }
 
     private void initializeGeneralDetails (Map<String, String> generalConfig) {
-        setGridSize(new Dimension2D(Double.parseDouble(generalConfig.get("gridWidth")),
-                                    Double.parseDouble(generalConfig.get("gridHeight"))));
-        setCellShape(generalConfig.get("cellShape"));
         setNeighborsToConsider(generalConfig.get("neighborsToConsider"));
         setEdgeType(generalConfig.get("edgeType"));
     }
@@ -130,30 +113,9 @@ public abstract class Simulation {
 
     public abstract void initializeSimulationToolbar (SimulationToolbar toolbar);
 
-    /**
-     * Return the grid view
-     * 
-     * @return
-     */
-
-    public BorderPane getSimulationView () {
-        return this.myView;
-    }
-
-    public GridView getGridView () {
-        return myGridView;
-    }
-
-    public void setGridView (GridView gridView) {
-        myRoot = new Group();
-        this.myGridView = gridView;
-        this.myRoot.getChildren().add(myGridView.getRoot());
-    }
-
     public void updateGrid () {
         myGrid.updateGrid();
-        myGridView.updateView();
-        mySimulationGraph.updateGraph(countCellsinGrid());
+        mySimulationView.update(countCellsinGrid());
     }
 
     public NeighborsHandler getNeighborsHandler () {
@@ -181,18 +143,6 @@ public abstract class Simulation {
                 }
 
             }
-        }
-    }
-
-    public void handleCellShape (String cellShape) {
-        if (cellShape.equals("Rectangle")) {
-            setGridView(new RectangleGridView(myGridSize, myGrid));
-        }
-        else if (cellShape.equals("Triangle")) {
-            setGridView(new TriangleGridView(myGridSize, myGrid));
-        }
-        else if (cellShape.equals("Hexagon")) {
-            setGridView(new HexagonGridView(myGridSize, myGrid));
         }
     }
 
@@ -244,14 +194,6 @@ public abstract class Simulation {
 
     }
 
-    public Dimension2D getGridSize () {
-        return myGridSize;
-    }
-
-    public void setGridSize (Dimension2D myGridSize) {
-        this.myGridSize = myGridSize;
-    }
-
     public String getEdgeType () {
         return myEdgeType;
     }
@@ -269,12 +211,16 @@ public abstract class Simulation {
         myNeighborsToConsider = neighborsToConsider.toUpperCase();
     }
 
-    public SimulationGraph getGraphView () {
-        return mySimulationGraph;
+    public Node getView () {
+        return this.mySimulationView.view();
     }
 
-    public Node getSimulationToolbar () {
-        return mySimulationToolbar.getRoot();
+    public void clear () {
+        mySimulationView.clear();
+    }
+
+    public void addToLegend (List<String> legend) {
+        mySimulationView.addToLegend(legend);
     }
 
     public abstract void getSimulationNames ();

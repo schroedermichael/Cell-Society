@@ -22,7 +22,7 @@ public class SimulationController {
 
     SimulationController (Group simulationRoot, int height, int width) {
         this.mySimulations = new ArrayList<Simulation>();
-        File simulationConfig = new File("src/resources/ForagingAnts.xml");
+        File simulationConfig = new File("src/resources/Sugar.xml");
         initializeSimulation(simulationConfig.getAbsolutePath());
     }
 
@@ -35,8 +35,9 @@ public class SimulationController {
             Element rootElement = myParser.getRootElement(xmlFilename);
 
             if (mySimulations.size() > 0) {
-                // mySimulations.get(mySimulations.size() -
-                // 1).getSimulationView().getChildren().clear();
+                mySimulations.get(mySimulations.size() -
+                                  1)
+                        .clear();
                 mySimulations.remove(mySimulations.size() - 1);
             }
             this.mySimulations.add(0, myParser.createSimulation(rootElement));
