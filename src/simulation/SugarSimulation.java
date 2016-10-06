@@ -34,7 +34,8 @@ public class SugarSimulation extends Simulation {
     private int myMaxPatchSugar;
     private int myNumAgents;
     private ResourceBundle GUIResources = ResourceBundle.getBundle("resources/English");
-
+    private  Map<String,Integer> cellCounts = new HashMap<String,Integer>();
+    
     public SugarSimulation (Map<String, Map<String, String>> simulationConfig) {
         super(simulationConfig);
         myTicker = 0;
@@ -43,14 +44,17 @@ public class SugarSimulation extends Simulation {
 
     @Override
     public Map<String,Integer> countCellsinGrid () {
-        Map<String,Integer> cellCounts = new HashMap<String,Integer>();
+       
         List<String> myNames = getSimulationNames();
         cellCounts.put("Step", myTicker);
         for (String name: myNames) {
             if(cellCounts.containsKey(name)) {
-                if(name.equals(GUIResources.getString("NumAgents")))
+                if(name.equals(GUIResources.getString("NumAgents"))) {
                     cellCounts.put(name, myNumAgents);
+                    System.out.println("NumAgents " + myNumAgents);
+                }
             }
+            else if (name.equals("Step")) {}
             else {
                cellCounts.put(name, 0);
             }

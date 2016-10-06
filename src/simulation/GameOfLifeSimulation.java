@@ -1,6 +1,7 @@
 package simulation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import applicationView.SimulationToolbar;
@@ -11,6 +12,7 @@ import grid.Coordinate;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 
+
 /**
  * 
  * @author Sean Hudson
@@ -19,6 +21,7 @@ import javafx.scene.paint.Color;
 public class GameOfLifeSimulation extends Simulation {
 
     private int myNumToReproduce;
+    private Map<String, Integer> myOutput = new HashMap<String, Integer>();
 
     public GameOfLifeSimulation (Map<String, Map<String, String>> simulationConfig) {
         super(simulationConfig);
@@ -39,14 +42,14 @@ public class GameOfLifeSimulation extends Simulation {
         }
         return count;
     }
-    
+
     @Override
-    public void getSimulationNames () {
+    protected List<String> getSimulationNames () {
         List<String> myList = new ArrayList<String>();
         for (State n : getSimulationStates()) {
             myList.add(n.name());
         }
-        mySimulationGraph.addToLegend(myList);
+        return myList;
     }
 
     public void setNextState (Cell cell) {
@@ -71,24 +74,35 @@ public class GameOfLifeSimulation extends Simulation {
     }
 
     @Override
-    public List<Integer> countCellsinGrid () {
+    public Map<String, Integer> countCellsinGrid () {
         stepNum = getStepNum();
+        stepNum++;
         int livingCount = 0;
         int emptyCount = 0;
+        List<String> myNames = getSimulationNames();
+        myOutput.put("Step", stepNum);
         for (Cell cell : getGrid().getImmutableCellGrid().values()) {
             if (cell.getMyCurrentState().equals(GameOfLifeState.LIVING)) {
                 livingCount++;
             }
-            if (cell.getMyCurrentState().equals(GameOfLifeState.EMPTY)) {
-                emptyCount++;
+
+        }
+        emptyCount = getGrid().getNumRows() * (getGrid().getNumColumns()) - livingCount;
+        for (String name : myNames) {
+            if (myOutput.containsKey(name)) {
+                if (name.equals("Step")) {
+                }
+                else if (name.equals("EMPTY")) {
+                    myOutput.put(name, emptyCount);
+                }
+                else if (name.equals("LIVING")) {
+                    myOutput.put(name, livingCount);
+                }
+            }
+            else {
+                myOutput.put(name, 0);
             }
         }
-        stepNum++;
-
-        List<Integer> myOutput = new ArrayList<Integer>();
-        myOutput.add(stepNum - 1);
-        myOutput.add(emptyCount);
-        myOutput.add(livingCount);
         return myOutput;
 
     }

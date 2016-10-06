@@ -16,6 +16,7 @@
 package simulation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +48,9 @@ public class ForagingAntsSimulation extends Simulation {
     private int myFoodGathered;
     private double myK;
     private double myN;
-
+    private Map<String,Integer> myOutput = new HashMap<String,Integer>();
+    private ResourceBundle GUIResources = ResourceBundle.getBundle("resources/English");
+    
     /**
      * Constructs a ForagingAntSimulation using the configuration detailed in the XML file
      * 
@@ -242,11 +245,23 @@ public class ForagingAntsSimulation extends Simulation {
     }
 
     @Override
-    public List<Integer> countCellsinGrid () {
-        List<Integer> myOutput = new ArrayList<Integer>();
-        myOutput.add(stepNum - 1);
-        myOutput.add(myFoodGathered);
-        myOutput.add(myTotalAnts);
+    public Map<String,Integer> countCellsinGrid () {
+        stepNum = getStepNum();
+        List<String> myNames = getSimulationNames();
+        myOutput.put("Step",stepNum);
+        for (String name: myNames) {
+            if(myOutput.containsKey(name)) {
+                if(name.equals("Step")) {}
+                if(name.equals(GUIResources.getString("FoodGathered"))) {
+                    myOutput.put(name, myFoodGathered);
+                }
+                if(name.equals(GUIResources.getString("TotalAnts"))) 
+                    myOutput.put(name, myTotalAnts);
+            }
+            else {
+                myOutput.put(name, 0);
+            }
+        }
         return myOutput;
     }
 
@@ -275,12 +290,11 @@ public class ForagingAntsSimulation extends Simulation {
     }
 
     @Override
-    public void getSimulationNames () {
-        ResourceBundle GUIResources = ResourceBundle.getBundle("resources/English");
+    public List<String> getSimulationNames () {
         List<String> myList = new ArrayList<String>();
         myList.add(GUIResources.getString("FoodGathered"));
         myList.add(GUIResources.getString("TotalAnts"));
-        mySimulationGraph.addToLegend(myList);
+        return myList;
     }
 
     @Override

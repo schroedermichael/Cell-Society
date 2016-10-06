@@ -1,6 +1,31 @@
+// This entire file is part of my masterpiece.
+// Kayla Schulz
+
+/**
+ * This code is a part of my masterpiece because of the significant refactor it
+ * needed. When we submitted the code, I was bothered by the obvious design flaw
+ * with this class. There was a list of the different states to be input into the
+ * graph legend, and there was another list with the corresponding data. This
+ * was a huge problem, because if one index changed, suddenly the graph was entirely
+ * wrong. So, although this code isn't as neat at the other one (it requires more
+ * checks), this one is much more realistic and drastically reduces the risk of
+ * another person coming in and ruining the graph for the entire simulation. The
+ * one downfall in this piece though, is the need to use booleans to check if a
+ * series has been created yet. I was unable to find any boolean operation for a series
+ * other than .equals, which did not give me what I needed. I would be interested
+ * to talk about alternatives to the boolean. But overall, I am satisfied with the
+ * change, knowing that the data is being passed with its name, rather than relying
+ * on it being on the same index in two entirely separate lists.
+ * 
+ * A significant amount of the refactor can also be found in each simulation. Instead
+ * of two methods that return two different lists, I coordinated the methods so 
+ * only one needs to communicate with other classes. That way, one method changed
+ * from public to protected, giving it less communication with outside classes.
+ */
+
 package applicationView;
 
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import javafx.geometry.Side;
@@ -24,7 +49,10 @@ public class SimulationGraph {
     private Series<Number, Number> mySecondSeries = new XYChart.Series<Number, Number>();
     private Series<Number, Number> myThirdSeries = new XYChart.Series<Number, Number>();
     private LineChart<Number, Number> myLineChart =
-            new LineChart<Number, Number>(new NumberAxis(), new NumberAxis());;
+            new LineChart<Number, Number>(new NumberAxis(), new NumberAxis());
+    private boolean firstUsed = false;
+    private boolean secondUsed = false;
+    private boolean thirdUsed = false;
 
     /**
      * Creates the graph by setting the preferred height and adding the first
@@ -49,19 +77,30 @@ public class SimulationGraph {
      * @param myNamesForLegend
      */
     public void addToLegend (Set<String> myNamesForLegend) {
-        for (int i = 0; i < myNamesForLegend.size(); i++) {
-            String checkName = myNamesForLegend.iterator().next();
+        Iterator<String> myit = myNamesForLegend.iterator();
+        while (myit.hasNext()) {
+            String checkName = myit.next();
             if (checkName.equals("Step")) {
             }
-            else if (myFirstSeries == null) 
+            else if (checkName.equals(myFirstSeries.getName()) ||
+                     checkName.equals(mySecondSeries.getName()) ||
+                     checkName.equals(myThirdSeries.getName())) {
+            }
+            else if (!firstUsed) {
                 myFirstSeries.setName(checkName);
-            else if (mySecondSeries == null) {
+                firstUsed = true;
+            }
+            else if (!secondUsed) {
                 mySecondSeries.setName(checkName);
                 myLineChart.getData().add(mySecondSeries);
+                secondUsed = true;
             }
-            else if (myThirdSeries == null) {
+            else if (!thirdUsed) {
                 myThirdSeries.setName(checkName);
                 myLineChart.getData().add(myThirdSeries);
+                thirdUsed = true;
+            }
+            else {
             }
         }
     }
@@ -73,16 +112,20 @@ public class SimulationGraph {
      * 
      * @param myData
      */
-    public void updateGraph (Map<String,Integer> myData) {
+    public void updateGraph (Map<String, Integer> myData) {
         Set<String> myLegendNames = myData.keySet();
         addToLegend(myLegendNames);
-        myFirstSeries.getData().add(new Data<Number, Number>(myData.get(0), myData.get(1)));
+        myFirstSeries.getData().add(new Data<Number, Number>(myData.get("Step"),
+                                                             myData.get(myFirstSeries.getName())));
         if (myData.size() > 2) {
             mySecondSeries.getData()
-                    .add(new Data<Number, Number>(myData.get(0), myData.get(2)));
+                    .add(new Data<Number, Number>(myData.get("Step"),
+                                                  myData.get(mySecondSeries.getName())));
         }
         if (myData.size() > 3) {
-            myThirdSeries.getData().add(new Data<Number, Number>(myData.get(0), myData.get(3)));
+            myThirdSeries.getData()
+                    .add(new Data<Number, Number>(myData.get("Step"),
+                                                  myData.get(myThirdSeries.getName())));
         }
     }
 

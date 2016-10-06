@@ -8,7 +8,7 @@
  *         This class depends on Grid (the actual implementation of which is hidden from the
  *         simulation), AgentCell, NeighborsHandler, and SimulationToolbar (which it adds its
  *         simulation-specific sliders to).
- *         
+ * 
  *         This class is used by XMLParser, which returns an initialized simulation, by passing in a
  *         map of configuration variables, which sets up the instance variables in
  *         initializeSimulationDetails.
@@ -34,6 +34,7 @@ public class SegregationSimulation extends Simulation {
     private double myAgentSatisfiedRatio;
     private int myXCount;
     private int myOCount;
+    private Map<String, Integer> myOutput = new HashMap<String, Integer>();
 
     /**
      * Constructs a Segregation Simulation using the configuration detailed in the XML File
@@ -154,26 +155,29 @@ public class SegregationSimulation extends Simulation {
     }
 
     @Override
-    public Map<String,Integer> countCellsinGrid () {
+    public Map<String, Integer> countCellsinGrid () {
         stepNum = getStepNum();
+        stepNum++;
         List<String> myNames = getSimulationNames();
-        Map<String,Integer> myOutput = new HashMap<String,Integer>();
-        myOutput.put("Step",stepNum);
-        for (String name: myNames) {
-            if(myOutput.containsKey(name)) {
-                if(name.equals("EMPTY")) {
-                    myOutput.put(name, getGrid().getNumColumns() * getGrid().getNumRows() - myXCount - myOCount);
+        myOutput.put("Step", stepNum);
+        for (String name : myNames) {
+            if (myOutput.containsKey(name)) {
+                if (name.equals("Step")) {
                 }
-                if(name.equals("X")) 
+                if (name.equals("EMPTY")) {
+                    myOutput.put(name, getGrid().getNumColumns() * getGrid().getNumRows() -
+                                       myXCount - myOCount);
+                }
+                if (name.equals("X"))
                     myOutput.put(name, myXCount);
-                if(name.equals("O"))
+                if (name.equals("O"))
                     myOutput.put(name, myOCount);
             }
             else {
                 myOutput.put(name, 0);
             }
         }
-        stepNum++;
+
         return myOutput;
     }
 

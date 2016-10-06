@@ -20,6 +20,7 @@ public class PredatorPreySimulation extends Simulation {
     private int mySharkMaxHealth;
     private int mySharkCount;
     private int myFishCount;
+    private Map<String, Integer> myOutput = new HashMap<String, Integer>();
 
     public PredatorPreySimulation (Map<String, Map<String, String>> simulationConfig) {
         super(simulationConfig);
@@ -246,16 +247,31 @@ public class PredatorPreySimulation extends Simulation {
     }
 
     @Override
-    public List<Integer> countCellsinGrid () {
+    public Map<String, Integer> countCellsinGrid () {
         stepNum = getStepNum();
-        int emptyCount = 0;
-        emptyCount = getGrid().getNumRows()*(getGrid().getNumColumns())-myFishCount-mySharkCount;
         stepNum++;
-        List<Integer> myOutput = new ArrayList<Integer>();
-        myOutput.add(stepNum - 1);
-        myOutput.add(emptyCount);
-        myOutput.add(mySharkCount);
-        myOutput.add(myFishCount);
+        int emptyCount = 0;
+        emptyCount =
+                getGrid().getNumRows() * (getGrid().getNumColumns()) - myFishCount - mySharkCount;
+        List<String> myNames = getSimulationNames();
+        myOutput.put("Step", stepNum);
+        for (String name : myNames) {
+            if (myOutput.containsKey(name)) {
+                if (name.equals("Step")) {
+                }
+                if (name.equals("EMPTY")) {
+                    myOutput.put(name, emptyCount);
+                }
+                if (name.equals("SHARK"))
+                    myOutput.put(name, mySharkCount);
+                if (name.equals("FISH"))
+                    myOutput.put(name, myFishCount);
+            }
+            else {
+                myOutput.put(name, 0);
+            }
+        }
+
         return myOutput;
     }
 
@@ -273,12 +289,12 @@ public class PredatorPreySimulation extends Simulation {
     }
 
     @Override
-    public void getSimulationNames () {
+    public List<String> getSimulationNames () {
         List<String> myList = new ArrayList<String>();
         for (State n : getSimulationStates()) {
             myList.add(n.name());
         }
-        mySimulationGraph.addToLegend(myList);
+        return myList;
     }
 
     @Override

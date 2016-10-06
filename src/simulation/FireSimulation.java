@@ -1,6 +1,7 @@
 package simulation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -12,6 +13,7 @@ import grid.Coordinate;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 
+
 /**
  * 
  * @author Sean Hudson
@@ -21,6 +23,7 @@ public class FireSimulation extends Simulation {
 
     private double probCatch;
     private int burnTime;
+    private Map<String, Integer> myOutput = new HashMap<String, Integer>();
 
     public FireSimulation (Map<String, Map<String, String>> simulationConfig) {
         super(simulationConfig);
@@ -44,8 +47,9 @@ public class FireSimulation extends Simulation {
     }
 
     @Override
-    public List<Integer> countCellsinGrid () {
+    public Map<String, Integer> countCellsinGrid () {
         stepNum = getStepNum();
+        stepNum++;
         int burningCount = 0;
         int treeCount = 0;
         int emptyCount = 0;
@@ -61,12 +65,25 @@ public class FireSimulation extends Simulation {
                 emptyCount++;
             }
         }
-        stepNum++;
-        List<Integer> myOutput = new ArrayList<Integer>();
-        myOutput.add(stepNum - 1);
-        myOutput.add(emptyCount);
-        myOutput.add(treeCount);
-        myOutput.add(burningCount);
+        List<String> myNames = getSimulationNames();
+        myOutput.put("Step", stepNum);
+        for (String name : myNames) {
+            if (myOutput.containsKey(name)) {
+                if (name.equals("Step")) {
+                }
+                if (name.equals("BURNING")) {
+                    myOutput.put(name, burningCount);
+                }
+                if (name.equals("TREE"))
+                    myOutput.put(name, treeCount);
+                if (name.equals("EMPTY"))
+                    myOutput.put(name, emptyCount);
+            }
+            else {
+                myOutput.put(name, 0);
+            }
+        }
+
         return myOutput;
     }
 
@@ -161,12 +178,12 @@ public class FireSimulation extends Simulation {
     }
 
     @Override
-    public void getSimulationNames () {
+    public List<String> getSimulationNames () {
         List<String> myList = new ArrayList<String>();
         for (State n : getSimulationStates()) {
             myList.add(n.name());
         }
-        mySimulationGraph.addToLegend(myList);
+        return myList;
     }
 
 }

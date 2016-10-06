@@ -35,7 +35,7 @@ public class SimulationController {
      */
     SimulationController (Group simulationRoot, int height, int width) {
         this.mySimulations = new ArrayList<Simulation>();
-        File simulationConfig = new File("src/resources/ForagingAnts.xml");
+        File simulationConfig = new File("src/resources/Sugar.xml");
         initializeSimulation(simulationConfig.getAbsolutePath());
     }
 
@@ -53,7 +53,7 @@ public class SimulationController {
                 mySimulations.remove(mySimulations.size() - 1);
             }
             this.mySimulations.add(0, myParser.createSimulation(rootElement));
-            mySimulations.get(mySimulations.size() - 1).countCellsinGrid();
+            //mySimulations.get(mySimulations.size() - 1).countCellsinGrid();
         }
         catch (XMLParserException e) {
             createErrorBox(myResources.getString("XMLExceptionBadConfigFile"));

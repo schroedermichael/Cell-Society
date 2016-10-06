@@ -48,7 +48,7 @@ public abstract class Simulation {
     public Simulation (Map<String, Map<String, String>> simulationConfig) {
         initializeView();
         initializeSimulation(simulationConfig);
-        getSimulationNames();
+        ///getSimulationNames();
     }
 
     private void initializeView () {
@@ -283,5 +283,5 @@ public abstract class Simulation {
         return mySimulationToolbar.getRoot();
     }
 
-    public abstract List<String> getSimulationNames ();
+    protected abstract List<String> getSimulationNames ();
 }
