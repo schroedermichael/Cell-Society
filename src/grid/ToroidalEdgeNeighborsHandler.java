@@ -1,5 +1,7 @@
 package grid;
 
+import cell.Cell;
+
 /**
  * 
  * @author Sean Hudson
@@ -7,7 +9,7 @@ package grid;
  */
 public class ToroidalEdgeNeighborsHandler extends NeighborsHandler {
 
-    public ToroidalEdgeNeighborsHandler (String myCellShape, Grid grid) {
+    public ToroidalEdgeNeighborsHandler (String myCellShape, Grid<Cell> grid) {
         super(myCellShape, grid);
     }
 
@@ -28,8 +30,6 @@ public class ToroidalEdgeNeighborsHandler extends NeighborsHandler {
     public Coordinate handleEdgeCoordinate (Coordinate coordinate,
                                             Coordinate neighborRelativeCoordinate) {
         Coordinate offGridCoordinate = coordinate.add(neighborRelativeCoordinate);
-        // double x = Math.max(0, coordinate.getX() - neighborRelativeCoordinate.getX() *
-        // (getMyGrid().getNumColumns() - 1));
         double x = wrapCoordinate(offGridCoordinate.getX(), getMyGrid().getNumColumns());
         double y = wrapCoordinate(offGridCoordinate.getY(), getMyGrid().getNumRows());
         return new Coordinate(x, y);

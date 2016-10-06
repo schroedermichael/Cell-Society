@@ -1,106 +1,120 @@
+// This entire file is part of my masterpiece.
+// Sean Hudson
+
+/**
+ * This class is part of my masterpiece because it exemplifies: 
+ * Separation of concerns, re-usability/generic, open-closed principle and interfaces
+ * Separations of concerns - Grid class only deals with matters related to accessing and managing the data structure
+ * re-usability - I re-factored it to be of a generic type so that it could be re-used in any project
+ * open-closed principle - Grid is such a central class to the project that its API shouldn't diminish, but it should be flexible to add more methods
+ * interface - implements the Searchable interface which give immutable access to the Grid data. Interface is passed in instead of Grid reference when edits to the grid aren't needed
+ */
+
 package grid;
 
 import java.util.*;
 import java.util.function.Consumer;
-import cell.*;
 
 /**
+ * Generic grid class that maps a coordinate to a specified type of object
+ *
  * 
  * @author Sean Hudson
  *
  */
-public class Grid implements Iterable<Cell> {
-    private Map<Coordinate, Cell> myCellGrid = new HashMap<Coordinate, Cell>();
+public class Grid<E> implements Iterable<E>, Searchable<E> {
+    private Map<Coordinate, E> myCellGrid = new HashMap<Coordinate, E>();
 
     private int myNumberOfRows;
     private int myNumberOfColumns;
 
-    public Grid (int numberOfRows, int numberOfColumns, Map<Coordinate, Cell> initCells) {
-        this.myNumberOfRows = numberOfRows;
-        this.myNumberOfColumns = numberOfColumns;
-        this.myCellGrid = initCells;
+    public Grid (int numberOfRows, int numberOfColumns, Map<Coordinate, E> initCells) {
+        myNumberOfRows = numberOfRows;
+        myNumberOfColumns = numberOfColumns;
+        myCellGrid = initCells;
     }
 
-    public Map<Coordinate, Cell> getCellGrid () {
+    /**
+     * gets the raw grid
+     * 
+     * @return grid
+     */
+    public Map<Coordinate, E> getCellGrid () {
         return myCellGrid;
     }
 
-    public Map<Coordinate, Cell> getImmutableCellGrid () {
+    /**
+     * gets an immutable version of the grid
+     * 
+     * @return grid
+     */
+    public Map<Coordinate, E> getImmutableCellGrid () {
         return Collections.unmodifiableMap(getCellGrid());
     }
 
     @Override
-    public Iterator<Cell> iterator () {
+    public Iterator<E> iterator () {
         return getImmutableCellGrid().values().iterator();
     }
 
-    public void applyFuncToCell (Consumer<Cell> func) {
+    @Override
+    public void applyFuncToCell (Consumer<E> func) {
         getImmutableCellGrid().values().forEach(func);
     }
 
-    // update (put in cell class)
-    public void updateGrid () {
-        for (Cell cell : getImmutableCellGrid().values()) {
-            cell.setMyCurrentState(cell.getMyNextState());
-            cell.setMyNextState(null);
-        }
-    }
-
+    /**
+     * Checks to see if the cell is in the grid
+     * 
+     * @param coordinate
+     * @return if cell in grid
+     */
     public Boolean isCreated (Coordinate coordinate) {
         return myCellGrid.containsKey(coordinate);
     }
 
+    /**
+     * Checks to see if the coordinate is inside the bounds of the grid
+     * 
+     * @param coordinate
+     * @return if coordinate in grid bounds
+     */
     public Boolean isInGrid (Coordinate coordinate) {
         return coordinate.getX() > -1 && coordinate.getX() < getNumRows() ||
                coordinate.getY() > -1 && coordinate.getY() < getNumColumns();
     }
 
-    public Cell getCell (Coordinate coordinate) {
+    @Override
+    public E getCell (Coordinate coordinate) {
         return myCellGrid.get(coordinate);
     }
 
-    public void addCell (Cell cell) {
-        myCellGrid.put(cell.getMyGridCoordinate(), cell);
+    /**
+     * Adds cell entry to the grid
+     * 
+     * @param coordinate
+     * @param cell
+     */
+    public void addCell (Coordinate coordinate, E cell) {
+        myCellGrid.put(coordinate, cell);
     }
 
+    @Override
     public int getNumRows () {
         return myNumberOfRows;
     }
 
+    @Override
     public int getNumColumns () {
         return myNumberOfColumns;
     }
 
-    public void setCellGrid (Map<Coordinate, Cell> cellGrid) {
+    /**
+     * sets the cell grid
+     * 
+     * @param cellGrid
+     */
+    public void setCellGrid (Map<Coordinate, E> cellGrid) {
         this.myCellGrid = cellGrid;
     }
-
-    /**
-     * TODO--return neighbors of the cell at this location
-     * 
-     * @param row
-     * @param col
-     * @return
-     */
-    // public abstract Neighbors getNeighbors (Cell cell, boolean diagonal);
-
-    /**
-     * @param cell
-     * @param neighbors
-     * @param x
-     * @param y
-     */
-    /*
-     * protected void checkAdjacent (Cell cell, Neighbors neighbors, int x, int y) {
-     * Coordinate coord =
-     * new Coordinate(x + cell.getMyGridCoordinate().getX(),
-     * y + cell.getMyGridCoordinate().getY());
-     * if (cellGrid.containsKey(coord)) {
-     * neighbors.addNeighbor(cellGrid.get(coord));
-     * }
-     * }
-     */
-
-    // abstract public void createNeighbors (Cell cell);
 
 }

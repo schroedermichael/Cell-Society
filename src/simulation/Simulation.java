@@ -34,7 +34,7 @@ public abstract class Simulation {
     private BorderPane myView;
     private Group myRoot;
     private SimulationToolbar mySimulationToolbar;
-    private Grid myGrid;
+    private Grid<Cell> myGrid;
     private GridView myGridView;
     private NeighborsHandler myNeighborsHandler;
     private State myDefaultState;
@@ -62,11 +62,11 @@ public abstract class Simulation {
 
     public abstract List<Integer> countCellsinGrid ();
 
-    public Grid getGrid () {
+    public Grid<Cell> getGrid () {
         return myGrid;
     }
 
-    public void setGrid (Grid grid) {
+    public void setGrid (Grid<Cell> grid) {
         this.myGrid = grid;
     }
 
@@ -91,7 +91,7 @@ public abstract class Simulation {
 
     public void initializeGrid (Map<String, Map<String, String>> simulationConfig) {
         Map<Coordinate, Cell> cellGrid = new HashMap<Coordinate, Cell>();
-        setGrid(new Grid(Integer
+        setGrid(new Grid<Cell>(Integer
                 .parseInt(simulationConfig.get("GeneralConfig").get("numberOfRows")), Integer
                         .parseInt(simulationConfig.get("GeneralConfig").get("numberOfRows")),
                          cellGrid));
@@ -110,7 +110,7 @@ public abstract class Simulation {
                     createCell(new Coordinate(Integer.parseInt(coordinateStrings[1]),
                                               Integer.parseInt(coordinateStrings[2])),
                                getSimulationState(entry.getValue()));
-            myGrid.addCell(cell);
+            myGrid.addCell(cell.getMyGridCoordinate(), cell);
         }
     }
 
@@ -156,8 +156,13 @@ public abstract class Simulation {
         this.myRoot.getChildren().add(myGridView.getRoot());
     }
 
+    private void applyCellTransitions(Cell cell){
+            cell.setMyCurrentState(cell.getMyNextState());
+            cell.setMyNextState(null);
+    }
+    
     public void updateGrid () {
-        myGrid.updateGrid();
+        myGrid.applyFuncToCell(cell -> applyCellTransitions(cell));
         myGridView.updateView();
         mySimulationGraph.updateGraph(countCellsinGrid());
     }
@@ -183,7 +188,8 @@ public abstract class Simulation {
             for (int c = 0; c < myGrid.getNumColumns(); c++) {
                 Coordinate coordinate = new Coordinate(r, c);
                 if (!myGrid.isCreated(coordinate)) {
-                    myGrid.addCell(createCell(coordinate, stateGenerator()));
+                    Cell cell = createCell(coordinate, stateGenerator());
+                    myGrid.addCell(cell.getMyGridCoordinate(), cell);
                 }
 
             }

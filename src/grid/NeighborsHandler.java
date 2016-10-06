@@ -15,9 +15,9 @@ import cell.Cell;
 public abstract class NeighborsHandler {
     // private String myCellShape;
     private String myNeighborsToConsider;
-    private Grid myGrid;
+    private Grid<Cell> myGrid;
 
-    NeighborsHandler (String neighborsToConsider, Grid grid) {
+    NeighborsHandler (String neighborsToConsider, Grid<Cell> grid) {
         myNeighborsToConsider = neighborsToConsider;
         myGrid = grid;
     }
@@ -93,11 +93,11 @@ public abstract class NeighborsHandler {
     public abstract Coordinate handleEdgeCoordinate (Coordinate coordinate,
                                                      Coordinate neighborRelativeCoordinate);
 
-    public Grid getMyGrid () {
+    public Grid<Cell> getMyGrid () {
         return myGrid;
     }
 
-    public void setMyGrid (Grid grid) {
+    public void setMyGrid (Grid<Cell> grid) {
         this.myGrid = grid;
     }
 }
