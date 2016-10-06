@@ -4,11 +4,7 @@ import java.util.*;
 import java.util.function.Consumer;
 import cell.*;
 
-/**
- * 
- * @author Sean Hudson
- *
- */
+
 public class Grid implements Iterable<Cell> {
     private Map<Coordinate, Cell> myCellGrid = new HashMap<Coordinate, Cell>();
 

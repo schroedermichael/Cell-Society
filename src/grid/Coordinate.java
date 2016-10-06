@@ -1,10 +1,5 @@
 package grid;
 
-/**
- * 
- * @author Sean Hudson
- *
- */
 public class Coordinate {
     private double myX;
     private double myY;

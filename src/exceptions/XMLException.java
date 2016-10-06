@@ -1,10 +1,5 @@
 package exceptions;
 
-/**
- * 
- * @author Kayla Schulz
- *
- */
 public class XMLException extends RuntimeException {
 
     /**

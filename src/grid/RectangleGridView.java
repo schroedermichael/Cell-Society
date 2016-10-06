@@ -3,11 +3,7 @@ package grid;
 import javafx.geometry.Dimension2D;
 import javafx.scene.shape.Rectangle;
 
-/**
- * 
- * @author Sean Hudson
- *
- */
+
 public class RectangleGridView extends GridView {
 
     public RectangleGridView (Dimension2D gridSize, Grid grid) {

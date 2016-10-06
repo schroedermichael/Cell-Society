@@ -2,11 +2,7 @@ package grid;
 
 import javafx.geometry.Dimension2D;
 
-/**
- * 
- * @author Sean Hudson
- *
- */
+
 public class TriangleGridView extends GridView {
 
     public TriangleGridView (Dimension2D gridSize, Grid grid) {

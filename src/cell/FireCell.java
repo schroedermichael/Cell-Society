@@ -2,11 +2,7 @@ package cell;
 
 import grid.Coordinate;
 
-/**
- * 
- * @author Sean Hudson
- *
- */
+
 public class FireCell extends Cell {
     private int myBurnTimer;
 

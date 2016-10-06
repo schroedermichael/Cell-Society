@@ -8,6 +8,7 @@ import simulation.PredatorPreySimulation.PredatorPreyState;
  * @author Michael Schroeder
  *
  */
+
 public class SharkCell extends Cell {
 
     private int myMaxBreedTime;

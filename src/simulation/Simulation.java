@@ -22,13 +22,7 @@ import javafx.scene.layout.BorderPane;
 import applicationView.SimulationGraph;
 import applicationView.SimulationToolbar;
 
-/**
- * 
- * @author Sean Hudson
- * @author Kayla Schulz
- * @author Michael Schroeder
- *
- */
+
 public abstract class Simulation {
     private String myCellShape = "Square";
     private BorderPane myView;

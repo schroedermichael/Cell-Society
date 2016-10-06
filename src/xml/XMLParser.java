@@ -21,7 +21,6 @@ import java.util.Map;
 
 /**
  * Handles parsing XML files by returning the root elements.
- *@author Sean Hudson
  *
  */
 public class XMLParser {

@@ -1,10 +1,5 @@
 package grid;
 
-/**
- * 
- * @author Sean Hudson
- *
- */
 public class NormalEdgeNeighborsHandler extends NeighborsHandler {
     public NormalEdgeNeighborsHandler (String myCellShape, Grid grid) {
         super(myCellShape, grid);
